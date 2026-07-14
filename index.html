@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Luxury Hotel & Casino Resort</title>
+
   <style>
     * {
       box-sizing: border-box;
@@ -18,6 +19,13 @@
       font-family: Arial, Helvetica, sans-serif;
       color: #ffffff;
       background: #071421;
+      overflow-x: hidden;
+    }
+
+    /* DESKTOP / TABLET HOTEL CASINO PAGE */
+
+    .desktop-page {
+      display: block;
     }
 
     .page {
@@ -122,85 +130,663 @@
       color: rgba(255,255,255,0.7);
     }
 
+    /* MOBILE OFFER WALL */
+
+    .mobile-page {
+      display: none;
+    }
+
+    @keyframes pp-shine {
+      0% { transform: translateX(-140%); }
+      60% { transform: translateX(180%); }
+      100% { transform: translateX(180%); }
+    }
+
+    .pp-wall {
+      width: 100%;
+      max-width: 540px;
+      min-height: 100vh;
+      margin: 0 auto;
+      color: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255, 205, 72, 0.16), transparent 30%),
+        radial-gradient(circle at 100% 22%, rgba(255, 45, 72, 0.2), transparent 30%),
+        linear-gradient(180deg, #071426 0%, #130313 48%, #06070D 100%);
+    }
+
+    .pp-hero {
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      padding: 1rem 1rem 1.05rem;
+      background:
+        linear-gradient(rgba(4, 10, 20, 0.42), rgba(8, 0, 12, 0.66)),
+        url("https://i.ibb.co/ymN3SMbb/us-flag.png");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .pp-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.14), transparent 36%),
+        linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.35));
+      pointer-events: none;
+    }
+
+    .pp-hero-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .pp-pill {
+      display: inline-block;
+      padding: 0.26rem 0.62rem;
+      margin-bottom: 0.5rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ffcf55, #fff0b6);
+      color: #130313;
+      font-size: 0.56rem;
+      font-weight: 950;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.35), 0 0 20px rgba(255, 205, 72, 0.32);
+    }
+
+    .pp-hero h1 {
+      margin: 0;
+      font-size: 1.48rem;
+      line-height: 1.03;
+      color: #ffffff;
+      font-weight: 950;
+      letter-spacing: -0.045em;
+      text-shadow: 0 3px 12px rgba(0,0,0,0.78);
+    }
+
+    .pp-hero p {
+      display: inline-block;
+      margin: 0.52rem 0 0;
+      padding: 0.32rem 0.62rem;
+      border-radius: 999px;
+      color: #ffffff;
+      background: rgba(0,0,0,0.46);
+      border: 1px solid rgba(255,255,255,0.18);
+      font-size: 0.66rem;
+      font-weight: 900;
+    }
+
+    .pp-trust-row {
+      display: flex;
+      justify-content: center;
+      gap: 0.26rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    .pp-trust-row span {
+      padding: 0.22rem 0.42rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.16);
+      color: #ffffff;
+      font-size: 0.52rem;
+      font-weight: 900;
+    }
+
+    .pp-wrap {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0.7rem 6px 1.1rem;
+    }
+
+    .pp-card {
+      width: 100%;
+      margin: 0.62rem auto;
+      border-radius: 18px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 52% 48%;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+        rgba(9, 20, 38, 0.95);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.44);
+    }
+
+    .pp-left {
+      min-width: 0;
+      position: relative;
+      padding: 0.62rem 0.42rem;
+      text-align: center;
+      background:
+        radial-gradient(circle at top, rgba(255, 205, 72, 0.13), transparent 48%),
+        linear-gradient(180deg, rgba(12, 34, 66, 0.96), rgba(8, 15, 31, 0.98));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pp-right {
+      min-width: 0;
+      padding: 0.62rem 0.48rem;
+      text-align: center;
+      background:
+        radial-gradient(circle at top right, rgba(255, 45, 72, 0.18), transparent 44%),
+        linear-gradient(180deg, rgba(46, 0, 18, 0.94), rgba(13, 8, 20, 0.98));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .pp-badge {
+      position: absolute;
+      top: 0.36rem;
+      left: 0.36rem;
+      max-width: calc(100% - 0.84rem);
+      padding: 0.26rem 0.44rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ff003c 0%, #ff5b00 48%, #ffcf55 100%);
+      color: #ffffff;
+      font-size: 0.52rem;
+      line-height: 1.05;
+      font-weight: 950;
+      white-space: nowrap;
+      box-shadow: 0 0 14px rgba(255,45,72,0.55), 0 0 18px rgba(255,207,85,0.25);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.22);
+    }
+
+    .pp-logo-box {
+      width: 96%;
+      max-width: 176px;
+      min-height: 86px;
+      margin: 1rem auto 0.3rem;
+      padding: 0.34rem;
+      border-radius: 17px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.15), rgba(255,255,255,0.035)),
+        rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+
+    .pp-logo {
+      width: 100%;
+      max-width: 160px;
+      max-height: 72px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .pp-logo-lucky-creek {
+      max-width: 192px;
+      max-height: 86px;
+      transform: scale(1.2);
+    }
+
+    .pp-logo-slotocash {
+      max-width: 190px;
+      max-height: 84px;
+      transform: scale(1.18);
+    }
+
+    .pp-logo-raging-bull {
+      max-width: 174px;
+      max-height: 78px;
+      transform: scale(1.08);
+    }
+
+    .pp-logo-black-lotus {
+      max-width: 178px;
+      max-height: 80px;
+      transform: scale(1.1);
+    }
+
+    .pp-stars {
+      color: #ffcf55;
+      font-size: 0.9rem;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      text-shadow: 0 0 9px rgba(255,205,72,0.35);
+    }
+
+    .pp-reviews {
+      margin-top: 0.2rem;
+      font-size: 0.56rem;
+      font-weight: 850;
+      opacity: 0.92;
+    }
+
+    .pp-score {
+      margin-top: 0.16rem;
+      color: #6bb7ff;
+      font-size: 1.12rem;
+      font-weight: 950;
+      letter-spacing: -0.04em;
+    }
+
+    .pp-score-label {
+      margin-top: 0.05rem;
+      font-size: 0.5rem;
+      opacity: 0.78;
+      font-weight: 800;
+    }
+
+    .pp-title {
+      margin: 0 0 0.34rem;
+      color: #ffcf55;
+      font-size: 0.88rem;
+      line-height: 1.12;
+      font-weight: 950;
+      letter-spacing: -0.02em;
+      text-shadow: 0 1px 9px rgba(255,205,72,0.26);
+    }
+
+    .pp-bonus-box {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0.34rem 0.22rem;
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at top right, rgba(255, 45, 72, 0.16), transparent 42%),
+        rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255, 205, 72, 0.16);
+    }
+
+    .pp-bonus {
+      margin: 0;
+      color: #ffffff;
+      font-size: 0.66rem;
+      line-height: 1.22;
+      font-weight: 950;
+      overflow-wrap: anywhere;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.42);
+    }
+
+    .pp-btn {
+      position: relative;
+      overflow: hidden;
+      display: block;
+      width: 100%;
+      max-width: 132px;
+      margin: 0.5rem auto 0.32rem;
+      padding: 0.62rem 0.36rem;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #00d96a 0%, #009848 100%);
+      color: #ffffff !important;
+      text-decoration: none !important;
+      font-size: 0.7rem;
+      line-height: 1.1;
+      font-weight: 950;
+      letter-spacing: 0.01em;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 0 16px rgba(0, 230, 110, 0.58), 0 0 28px rgba(0, 190, 90, 0.28);
+    }
+
+    .pp-btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .pp-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -140%;
+      width: 140%;
+      height: 100%;
+      background: linear-gradient(120deg, rgba(255,255,255,0), rgba(255,255,255,0.52), rgba(255,255,255,0));
+      animation: pp-shine 5.2s infinite;
+      pointer-events: none;
+    }
+
+    .pp-btn:link,
+    .pp-btn:visited,
+    .pp-btn:hover,
+    .pp-btn:active,
+    .pp-logo-link:link,
+    .pp-logo-link:visited,
+    .pp-logo-link:hover,
+    .pp-logo-link:active,
+    .pp-support:link,
+    .pp-support:visited,
+    .pp-support:hover,
+    .pp-support:active {
+      text-decoration: none !important;
+    }
+
+    .pp-note {
+      font-size: 0.46rem;
+      line-height: 1.22;
+      opacity: 0.88;
+      font-weight: 850;
+    }
+
+    .pp-info {
+      width: 100%;
+      margin: 0.72rem auto 0;
+      padding: 0.72rem 0.68rem;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at top right, rgba(255,45,72,0.14), transparent 44%),
+        rgba(8, 18, 34, 0.9);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.28);
+    }
+
+    .pp-info h2 {
+      margin: 0 0 0.42rem;
+      color: #ffcf55;
+      text-align: center;
+      font-size: 0.86rem;
+      line-height: 1.18;
+      font-weight: 950;
+    }
+
+    .pp-info p {
+      margin: 0;
+      color: rgba(255,255,255,0.88);
+      text-align: center;
+      font-size: 0.66rem;
+      line-height: 1.42;
+      font-weight: 650;
+    }
+
+    .pp-support {
+      display: block;
+      width: fit-content;
+      margin: 0.82rem auto 0;
+      padding: 0.58rem 0.92rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: #ffffff !important;
+      font-size: 0.68rem;
+      font-weight: 900;
+      text-decoration: none !important;
+    }
+
+    .pp-footer {
+      margin: 0.72rem auto 0;
+      padding-bottom: 0.75rem;
+      max-width: 500px;
+      color: rgba(255,255,255,0.82);
+      text-align: center;
+      font-size: 0.62rem;
+      line-height: 1.35;
+      font-weight: 750;
+    }
+
+    /* SCREEN-SIZE SWITCH */
+
     @media (max-width: 768px) {
-      .page {
-        padding: 22px 12px;
+      .desktop-page {
+        display: none !important;
       }
 
-      .container {
-        padding: 26px 18px;
-        border-radius: 20px;
+      .mobile-page {
+        display: block !important;
       }
 
-      h1 {
-        font-size: 32px;
+      html,
+      body {
+        background: #06070D !important;
       }
 
-      h2 {
-        font-size: 21px;
+      .pp-wall {
+        width: 100vw !important;
+        max-width: 100vw !important;
+        margin: 0 !important;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .desktop-page {
+        display: block !important;
       }
 
-      p {
-        font-size: 15px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
+      .mobile-page {
+        display: none !important;
       }
     }
   </style>
 </head>
 
 <body>
-  <main class="page">
-    <section class="container">
-      <div class="pill">Hotel Casino Resort</div>
 
-      <h1>Luxury Hotel Stays, Casino Entertainment and Resort Experiences</h1>
+  <!-- DESKTOP / TABLET VIEW -->
+  <div class="desktop-page">
+    <main class="page">
+      <section class="container">
+        <div class="pill">Hotel Casino Resort</div>
 
-      <p>
-        Discover a refined hotel casino destination designed for guests who want comfort, entertainment and memorable leisure experiences in one place. From stylish rooms and elegant suites to dining, events and casino entertainment, the resort brings together the atmosphere of a premium getaway with the convenience of modern guest services.
-      </p>
+        <h1>Luxury Hotel Stays, Casino Entertainment and Resort Experiences</h1>
 
-      <p>
-        The property is ideal for travelers looking for a complete resort stay, whether visiting for a weekend escape, a special occasion, a business trip or an evening of entertainment. Guests can enjoy comfortable accommodation, welcoming hospitality, restaurants, lounge areas, live events and access to a casino environment created for adult visitors.
-      </p>
+        <p>
+          Discover a refined hotel casino destination designed for guests who want comfort, entertainment and memorable leisure experiences in one place. From stylish rooms and elegant suites to dining, events and casino entertainment, the resort brings together the atmosphere of a premium getaway with the convenience of modern guest services.
+        </p>
 
-      <div class="grid">
-        <div class="card">
-          <strong>Hotel Accommodation</strong>
-          <span>Relax in well-appointed rooms and suites with modern comfort, guest services and easy access to resort facilities.</span>
+        <p>
+          The property is ideal for travelers looking for a complete resort stay, whether visiting for a weekend escape, a special occasion, a business trip or an evening of entertainment. Guests can enjoy comfortable accommodation, welcoming hospitality, restaurants, lounge areas, live events and access to a casino environment created for adult visitors.
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <strong>Hotel Accommodation</strong>
+            <span>Relax in well-appointed rooms and suites with modern comfort, guest services and easy access to resort facilities.</span>
+          </div>
+
+          <div class="card">
+            <strong>Casino Entertainment</strong>
+            <span>Enjoy a polished casino setting with table games, slots and entertainment options for adult guests.</span>
+          </div>
+
+          <div class="card">
+            <strong>Dining & Leisure</strong>
+            <span>Explore restaurants, bars, lounges, events and leisure spaces designed for a complete resort experience.</span>
+          </div>
         </div>
 
-        <div class="card">
-          <strong>Casino Entertainment</strong>
-          <span>Enjoy a polished casino setting with table games, slots and entertainment options for adult guests.</span>
-        </div>
+        <h2>A Complete Destination for Guests</h2>
 
-        <div class="card">
-          <strong>Dining & Leisure</strong>
-          <span>Explore restaurants, bars, lounges, events and leisure spaces designed for a complete resort experience.</span>
+        <p>
+          A hotel casino stay offers more than a room for the night. It combines the comfort of a quality hotel with entertainment, dining and social experiences that make every visit feel more complete. Guests can plan a relaxed overnight stay, meet friends for dinner, attend an event or enjoy the casino floor as part of a broader resort visit.
+        </p>
+
+        <h2>Plan Your Visit Responsibly</h2>
+
+        <p>
+          Casino entertainment is intended for adults only and should always be enjoyed responsibly. Visitors should check local age requirements, review property rules and confirm availability before planning their stay. Hotel services, dining hours, events and casino access may vary by location and date.
+        </p>
+
+        <a class="button" href="#contact">Learn More</a>
+
+        <div class="footer" id="contact">
+          18+ only where applicable. Please enjoy casino entertainment responsibly. This website provides general hotel and resort information and does not guarantee availability, pricing or promotions.
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- MOBILE VIEW -->
+  <div class="mobile-page">
+    <div class="pp-wall">
+      <div class="pp-hero">
+        <div class="pp-hero-inner">
+          <div class="pp-pill">Exclusive USA Offers</div>
+          <h1>Best USA Casino Offers</h1>
+          <p>Updated July 2026</p>
+          <div class="pp-trust-row">
+            <span>18+</span>
+            <span>Fast Access</span>
+            <span>Welcome Bonuses</span>
+          </div>
         </div>
       </div>
 
-      <h2>A Complete Destination for Guests</h2>
+      <div class="pp-wrap">
 
-      <p>
-        A hotel casino stay offers more than a room for the night. It combines the comfort of a quality hotel with entertainment, dining and social experiences that make every visit feel more complete. Guests can plan a relaxed overnight stay, meet friends for dinner, attend an event or enjoy the casino floor as part of a broader resort visit.
-      </p>
+        <div class="pp-card">
+          <div class="pp-left">
+            <div class="pp-badge">Top Bonus Pick</div>
+            <a class="dynamic-out pp-logo-link" href="https://trk.clicks-trk.com/aff_c?offer_id=4&aff_id=1138&url_id=6650&source=6650" target="_blank" rel="noopener noreferrer">
+              <div class="pp-logo-box">
+                <img class="pp-logo pp-logo-lucky-creek" src="https://i.postimg.cc/SNb5kVdY/Lucky-Creek-casino-featured-logo-New-Casino.png" alt="Lucky Creek Casino">
+              </div>
+            </a>
+            <div class="pp-stars">★★★★★</div>
+            <div class="pp-reviews">Reviews <strong>(235,476)</strong></div>
+            <div class="pp-score">10.0</div>
+            <div class="pp-score-label">Score</div>
+          </div>
 
-      <h2>Plan Your Visit Responsibly</h2>
+          <div class="pp-right">
+            <p class="pp-title">Welcome Bonus</p>
+            <div class="pp-bonus-box">
+              <p class="pp-bonus">Huge Welcome Package</p>
+              <p class="pp-bonus">Up to $7,500 + 200 FS</p>
+            </div>
+            <a class="dynamic-out pp-btn" href="https://trk.clicks-trk.com/aff_c?offer_id=4&aff_id=1138&url_id=6650&source=6650" target="_blank" rel="noopener noreferrer"><span>GET BONUS</span></a>
+            <div class="pp-note">Fast signup • Casino bonus</div>
+          </div>
+        </div>
 
-      <p>
-        Casino entertainment is intended for adults only and should always be enjoyed responsibly. Visitors should check local age requirements, review property rules and confirm availability before planning their stay. Hotel services, dining hours, events and casino access may vary by location and date.
-      </p>
+        <div class="pp-card">
+          <div class="pp-left">
+            <div class="pp-badge">New Player Deal</div>
+            <a class="dynamic-out pp-logo-link" href="https://trk.clicks-trk.com/aff_c?offer_id=8&aff_id=1138&url_id=6271&source=6271" target="_blank" rel="noopener noreferrer">
+              <div class="pp-logo-box">
+                <img class="pp-logo pp-logo-slotocash" src="https://i.postimg.cc/Xv25Ns6t/slotocash-casino.webp" alt="Slotocash Casino">
+              </div>
+            </a>
+            <div class="pp-stars">★★★★★</div>
+            <div class="pp-reviews">Reviews <strong>(225,476)</strong></div>
+            <div class="pp-score">9.9</div>
+            <div class="pp-score-label">Score</div>
+          </div>
 
-      <a class="button" href="#contact">Learn More</a>
+          <div class="pp-right">
+            <p class="pp-title">Welcome Bonus</p>
+            <div class="pp-bonus-box">
+              <p class="pp-bonus">600% Bonus</p>
+              <p class="pp-bonus">+ 60 Free Spins</p>
+            </div>
+            <a class="dynamic-out pp-btn" href="https://trk.clicks-trk.com/aff_c?offer_id=8&aff_id=1138&url_id=6271&source=6271" target="_blank" rel="noopener noreferrer"><span>GET BONUS</span></a>
+            <div class="pp-note">Fast signup • Bonus offer</div>
+          </div>
+        </div>
 
-      <div class="footer" id="contact">
-        18+ only where applicable. Please enjoy casino entertainment responsibly. This website provides general hotel and resort information and does not guarantee availability, pricing or promotions.
+        <div class="pp-card">
+          <div class="pp-left">
+            <div class="pp-badge">Lucky Spin Boost</div>
+            <a class="dynamic-out pp-logo-link" href="https://trk.clicks-trk.com/aff_c?offer_id=218&aff_id=1138&url_id=1981&source=1981" target="_blank" rel="noopener noreferrer">
+              <div class="pp-logo-box">
+                <img class="pp-logo pp-logo-raging-bull" src="https://i.ibb.co/tpnfnwS3/ragingbulls.webp" alt="Raging Bull Casino">
+              </div>
+            </a>
+            <div class="pp-stars">★★★★★</div>
+            <div class="pp-reviews">Reviews <strong>(225,476)</strong></div>
+            <div class="pp-score">9.8</div>
+            <div class="pp-score-label">Score</div>
+          </div>
+
+          <div class="pp-right">
+            <p class="pp-title">Welcome Bonus</p>
+            <div class="pp-bonus-box">
+              <p class="pp-bonus">350% Deposit Match</p>
+              <p class="pp-bonus">+ 50 Free Spins</p>
+            </div>
+            <a class="dynamic-out pp-btn" href="https://trk.clicks-trk.com/aff_c?offer_id=218&aff_id=1138&url_id=1981&source=1981" target="_blank" rel="noopener noreferrer"><span>GET BONUS</span></a>
+            <div class="pp-note">Claim up to 3 times</div>
+          </div>
+        </div>
+
+        <div class="pp-card">
+          <div class="pp-left">
+            <div class="pp-badge">Hot Match Deal</div>
+            <a class="dynamic-out pp-logo-link" href="https://trk.clicks-trk.com/aff_c?offer_id=4&aff_id=1138&url_id=6651&source=6651" target="_blank" rel="noopener noreferrer">
+              <div class="pp-logo-box">
+                <img class="pp-logo pp-logo-black-lotus" src="https://i.ibb.co/ZD5dvFs/Black-Lotus-500x250-dark.png" alt="Black Lotus Casino">
+              </div>
+            </a>
+            <div class="pp-stars">★★★★★</div>
+            <div class="pp-reviews">Reviews <strong>(222,276)</strong></div>
+            <div class="pp-score">9.7</div>
+            <div class="pp-score-label">Score</div>
+          </div>
+
+          <div class="pp-right">
+            <p class="pp-title">Welcome Bonus</p>
+            <div class="pp-bonus-box">
+              <p class="pp-bonus">Massive Deposit Match</p>
+              <p class="pp-bonus">500% up to $4,500</p>
+            </div>
+            <a class="dynamic-out pp-btn" href="https://trk.clicks-trk.com/aff_c?offer_id=4&aff_id=1138&url_id=6651&source=6651" target="_blank" rel="noopener noreferrer"><span>GET BONUS</span></a>
+            <div class="pp-note">Popular offer • Quick access</div>
+          </div>
+        </div>
+
+        <div class="pp-info">
+          <h2>Compare Casino Offers</h2>
+          <p>
+            Review the bonus details, free spins and terms before joining. Offers may change. Always play responsibly.
+          </p>
+        </div>
+
+        <a class="pp-support" href="mailto:playoffershub@gmail.com?subject=Support%20Request">Need help? Contact us</a>
+
+        <div class="pp-footer">
+          18+ only | Terms apply | Play responsibly
+        </div>
+
       </div>
-    </section>
-  </main>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+
+    var tracking = {
+      aff_sub: params.get("campaignid") || "",
+      aff_sub2: params.get("creative") || params.get("adgroupid") || "",
+      aff_sub3: params.get("keyword") || "",
+      aff_sub4: params.get("acc_id") || params.get("matchtype") || "",
+      aff_sub5:
+        params.get("gclid") ||
+        params.get("fbclid") ||
+        params.get("ttclid") ||
+        params.get("msclkid") ||
+        params.get("gbraid") ||
+        params.get("wbraid") ||
+        ""
+    };
+
+    setTimeout(function () {
+      document.querySelectorAll(".dynamic-out").forEach(function (link) {
+        try {
+          var url = new URL(link.href);
+
+          Object.keys(tracking).forEach(function (key) {
+            if (tracking[key]) {
+              url.searchParams.set(key, tracking[key]);
+            }
+          });
+
+          link.href = url.toString();
+        } catch (e) {}
+      });
+    }, 100);
+  })();
+  </script>
+
 </body>
 </html>
